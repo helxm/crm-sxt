@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="default" namespace="/" extends="struts-default">
+    	<interceptors>
+    		<interceptor name="myInter" class="com.bjsxt.crm.interceptor.MyInterceptor"></interceptor>
+    		<interceptor-stack name="myStack">
+    			<interceptor-ref name="defaultStack"></interceptor-ref>
+    			<interceptor-ref name="myInter">
+    				 <param name="excludeMethods">generate</param>
+    			</interceptor-ref>
+    		</interceptor-stack>
+    	</interceptors>
+    	
+    	<default-interceptor-ref name="myStack"></default-interceptor-ref>
+      
+       	<global-results>
+	    		<result  name="login" >/login.jsp</result>
+	    </global-results> 
+    
+    	<action name="loginAction" class="com.bjsxt.crm.action.LoginAction">
+        	<result name="welcome">/mainfile/default/main.jsp</result>
+        	<result name="login">/login.jsp</result>
+		</action>
+    	
+    	<!-- 
+    		为了提高框架容错性     权限管理模块
+    		class="userAction"  ioc 容器当中action 类的 id
+    	 -->
+    	<action name="userAction" class="userAction"  >
+    		<result name="list" >/mainfile/power/jsp/user/list.jsp</result>
+    		<result name="index" >/mainfile/power/jsp/user/index.jsp</result>
+    		<result name="main" >/main.jsp</result>
+    		<result name="login" >mainfile/power/jsp/user/authentic.jsp</result>
+    		<result name="updateFindId" >/mainfile/power/jsp/user/update.jsp</result>
+    		<result name="adderro" >/mainfile/power/jsp/user/adderro.jsp</result>
+    		<result name="jurisdiction" >/mainfile/power/jsp/user/jurisdiction.jsp</result>
+    		<result name="right" >/mainfile/default/right.jsp</result>
+    		
+    	</action>
+    	<action name="roleAction" class="roleAction"  >
+    		<result name="list" >/mainfile/power/jsp/role/list.jsp</result>
+    		<result name="showRole" >/mainfile/power/jsp/role/showRole.jsp</result>
+    		
+    	</action>
+    	<action name="menuAction" class="menuAction"  >
+    		<result name="grant" >/mainfile/power/jsp/menu/grant.jsp</result>
+    	</action>
+    
+   		<!-- 客户管理模块 -->
+        <action name="customerAction" class="customerAction" >
+      		<result name="add">/mainfile/customer/cust_add.jsp</result>
+      		<result name="list">/mainfile/customer/list.jsp</result>
+      		<result name="edit">/mainfile/customer/edit.jsp</result>
+      		<result name="today">/mainfile/customer/today_contact.jsp</result>
+      		<result name="detach_cust">/mainfile/customer/detached.jsp</result>
+      		<result name="showOrders">/mainfile/customer/showOrders.jsp</result>
+      		<result name="warnlost">/mainfile/customer/lost/prelost.jsp</result>
+      		<result name="predeal">/mainfile/customer/lost/deal_lost.jsp</result>
+      		<result name="success">/mainfile/customer/lost/deal_success.jsp</result>
+      		<result name="error">/mainfile/customer/lost/deal_error.jsp</result>
+      		<result name="losted">/mainfile/customer/lost/lost.jsp</result>
+      		<result name="showServices">/mainfile/customer/lost/showService.jsp</result>
+      		<result name="showHidden">/mainfile/market/chance/showHidden.jsp</result>
+      		
+      		<!-- 重定向到action -->
+			<result name="listAction" type="redirectAction">
+				<param name="actionName">customerAction!findAll</param>
+				<param name="namespace">/</param>
+			</result>
+			<!-- ajax -->
+			<result name="employees" type="stream">
+            	<param name="contentType">text/html</param>
+				<param name="inputName">jsonInputStream</param>
+        	</result>
+			
+       </action>
+       <action name="linkManAction" class="linkManAction">
+       		<result name="add">/mainfile/customer/linkman/link_add.jsp</result>
+       		<result name="list">/mainfile/customer/linkman/link_list.jsp</result>
+       		<result name="edit">/mainfile/customer/linkman/link_edit.jsp</result>
+      		<result name="allocate">/mainfile/customer/allocate_contact.jsp</result>
+      		<result name="mallocate">/mainfile/market/chance/allocate_contact.jsp</result>
+       		<!-- 重定向到action -->
+			<result name="listAction" type="redirectAction">
+				<param name="actionName">linkManAction!findAll</param>
+				<param name="namespace">/</param>
+			</result>
+       </action>
+       
+       <!-- 营销管理模块 -->
+       <action name="marketChanceAction" class="marketChanceAction">
+       		<result name="add">/mainfile/market/chance/chance_add.jsp</result>
+       		<result name="list">/mainfile/market/chance/list.jsp</result>
+       		<result name="edit">/mainfile/market/chance/edit.jsp</result>
+       		<result name="chooseEmp">/mainfile/market/chance/chooseEmp.jsp</result>
+       		<result name="cemps">/mainfile/customer/showEmployee.jsp</result>
+       		<!-- 重定向到action -->
+			<result name="listAction" type="redirectAction">
+				<param name="actionName">marketChanceAction!findAll</param>
+				<param name="namespace">/</param>
+			</result>
+       </action>
+       <!-- 服务管理模块 -->
+        <action name="serviceAction" class="serviceAction" >
+      		<result name="myserviceMgr">/mainfile/myservice/myserviceMgr.jsp</result>
+      		<result name="myserviceMgr3">/mainfile/myservice/myserviceMgr3.jsp</result>
+      		<result name="myservicelist">/mainfile/myservice/myservicelist.jsp</result>
+      		<result name="add1">/mainfile/myservice/add1.jsp</result>
+      		<result name="add">/mainfile/myservice/add.jsp</result>
+      		<result name="add2">/mainfile/myservice/add2.jsp</result>
+      		<result name="add3">/mainfile/myservice/add3.jsp</result>
+       </action>
+       
+        <action name="developmentAction" class="developmentAction">
+       		<result name="add">/mainfile/market/delve/deve_add.jsp</result>
+       		<result name="list">/mainfile/market/delve/list.jsp</result>
+       		<result name="edit">/mainfile/market/delve/edit.jsp</result>
+       		<result name="show">/mainfile/market/delve/show.jsp</result>
+       		<!-- 重定向到action -->
+			<result name="listAction" type="redirectAction">
+				<param name="actionName">developmentAction!findAll</param>
+				<param name="namespace">/</param>
+			</result>
+       </action>
+       
+       
+       <!-- 员工管理模块 -->
+       <action name="employeeAction" class="employeeAction" >
+       		<result name="add">/mainfile/myservice/add.jsp</result>
+       </action>
+       
+       
+      <!-- 价格管理模块 -->
+       <action name="productAction" class="productAction" >
+      		<result name="list">/mainfile/price/showProduct.jsp</result>
+      		<result name="list2">/mainfile/price/showAllProducts.jsp</result>
+       </action>
+       
+       
+        
+       <!-- 订单模块 -->
+        <action name="orderAction_*" class="orderAction" method="{1}">
+      		<result name="show">/mainfile/order/shows.jsp</result>
+      		<result name="add">/mainfile/order/add.jsp</result>
+      		<result name="update">/mainfile/order/update.jsp</result>
+       </action>
+       
+       <action name="orderSearch_*" class="orderSearch" method="{1}">
+      		<result name="showSeach">/mainfile/order/shows.jsp</result>
+      		<result name="cancel">/mainfile/order/cancelor.jsp</result>
+      		<result name="orderaction" >/mainfile/order/shows.jsp</result>
+       </action>
+       <action name="orderIndex_*" class="orderIndex" method="{1}">
+      		<result name="index">/mainfile/order/index.jsp</result>
+      		<result name="orderaction" >/mainfile/order/shows.jsp</result>
+       </action>
+       <action name="ordProdcQuery_*" class="ordProdcQuery" method="{1}">
+      		<result name="query">/mainfile/order/ordPro.jsp</result>
+      		<result name="orderaction" >/mainfile/order/shows.jsp</result>
+       </action>
+       
+    </package>
+    
+     <package name="security" namespace="/" extends="struts-default">
+	       	<action name="securityCodeImageAction" class="com.bjsxt.crm.action.SecurityCodeImageAction">
+			<result name="success" type="stream">
+				<param name="contentType">image/jpeg</param>
+				<param name="inputName">imageStream</param>
+				<param name="bufferSize">2048</param>
+			</result>
+			</action>
+       </package>
+</struts>

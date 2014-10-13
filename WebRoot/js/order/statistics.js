@@ -1,0 +1,2 @@
+/*! ydh-resource-web author:wmao 2014-08-06*/
+var _hmt=_hmt||[];!function(){var a=document.createElement("script");a.src="//hm.baidu.com/hm.js?e6a820e58d40d6bbfdaa42e767e97522";var b=document.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b)}();
